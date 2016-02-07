@@ -22,14 +22,16 @@ gulp.task('ts:dist', function () {
     .pipe($.sourcemaps.init())
     .pipe($.typescript(tsProj))
     .pipe($.uglify())
-    .pipe($.sourcemaps.write('./assetst/js'))
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('./assets/js'));
 });
 
 gulp.task('sass:dev', function () {
   return gulp.src('./assets/sass/**/*.{scss,sass}')
     .pipe($.sourcemaps.init())
-    .pipe($.sass({includePaths: ['./bower_components']}).on('error', $.sass.logError))
+    .pipe($.sass({
+        includePaths: ['./bower_components']
+      }).on('error', $.sass.logError))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('./assets/css'));
 });
@@ -37,9 +39,11 @@ gulp.task('sass:dev', function () {
 gulp.task('sass:dist', function () {
   return gulp.src('./assets/sass/**/*.{scss,sass}')
     .pipe($.sourcemaps.init())
-    .pipe($.sass({includePaths: ['./bower_components']}).on('error', $.sass.logError))
-    .pipe($.uglify())
-    .pipe($.sourcemaps.write('./assets/css'))
+    .pipe($.sass({
+        includePaths: ['./bower_components'],
+        outputStyle: 'compressed'
+      }).on('error', $.sass.logError))
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('./assets/css'));
 });
 
