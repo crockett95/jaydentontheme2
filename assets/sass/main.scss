@@ -1,0 +1,19 @@
+$icon-font-path: "../../bower_components/bootstrap-sass/assets/fonts/bootstrap/";
+$fa-font-path: "../../bower_components/font-awesome/fonts";
+
+$headings-font-family: 'Shadows Into Light', cursive;
+@import "bootswatch/superhero/variables";
+$navbar-default-brand-color: $brand-primary;
+$navbar-default-border: $body-bg;
+$web-font-path: '';
+// bower:scss
+@import "bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "font-awesome/scss/font-awesome.scss";
+// endbower
+@import "bootswatch/superhero/bootswatch";
+
+@import "base";
+@import "navbar";
+@import "home";
+@import "page";
+@import "wp-classes";

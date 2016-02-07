@@ -1,0 +1,8 @@
+.idea
+bower_components
+assets/css
+assets/js
+node_modules
+typings
+vendor
+vendor-plugins

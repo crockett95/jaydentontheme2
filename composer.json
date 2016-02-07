@@ -1,0 +1,32 @@
+{
+    "name": "crockett95/jaydenton-wp-theme",
+    "authors": [
+        {
+            "name": "Steve Crockett",
+            "email": "crockett95@gmail.com"
+        }
+    ],
+    "require": {
+        "jarednova/timber": "dev-master",
+        "wpackagist-plugin/advanced-custom-fields": "^4.4",
+        "vlucas/phpdotenv": "^2.2",
+        "wpackagist-plugin/menu-item-custom-fields": "^0.3.0"
+    },
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"http://wpackagist.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Crockett95\\JayDenton\\": "lib/" },
+        "classmap": [
+            "vendor-plugins/timber/lib/"
+        ]
+    },
+    "extra": {
+        "installer-paths": {
+            "vendor-plugins/{$name}/": ["type:wordpress-plugin"]
+        }
+    }
+}

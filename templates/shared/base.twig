@@ -1,0 +1,39 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js ie ie6 lt-ie9 lt-ie8 lt-ie7" {{site.language_attributes}}> <![endif]-->
+<!--[if IE 7]><html class="no-js ie ie7 lt-ie9 lt-ie8" {{site.language_attributes}}> <![endif]-->
+<!--[if IE 8]><html class="no-js ie ie8 lt-ie9" {{site.language_attributes}}> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" {{site.language_attributes}}> <!--<![endif]-->
+  {% block html_head_container %}
+    <head>
+      {% include 'html-header.twig' %}
+      {% block head %}
+      {% endblock %}
+    </head>
+  {% endblock %}
+
+  <body class="{{body_class}}" data-template="base.twig">
+    {% block header %}
+      {% include 'header.twig' with { 'menu': primaryMenu, 'strings': strings } %}
+    {% endblock %}
+    
+    {% block outerContent %}
+      <div class="container">
+        <div class="row">
+          <section id="content" role="main" class="page-content">
+            {% if title %}<h1>{{title}}</h1>{% endif %}
+            <div class="wrapper {{sidebar_class}}">
+              {% block content %}
+                Sorry, no content
+              {% endblock %}
+            </div>
+          </section>
+        </div>
+      </div>
+    {% endblock %}
+
+    {% block footer %}
+      {% include 'footer.twig' with { 'menu': footerMenu, 'strings': strings } %}
+      {{ function('wp_footer') }}
+    {% endblock %}
+  </body>
+</html>

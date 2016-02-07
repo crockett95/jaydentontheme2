@@ -1,0 +1,69 @@
+.jay {
+  font-family: 'Shadows Into Light', cursive;
+}
+
+.home-banner {
+  background: {
+    image: url('../images/logo.png');
+    size: cover;
+    attachment: fixed;
+    position: center;
+    repeat: no-repeat;
+  }
+  margin: {
+    bottom: 0;
+  }
+  position: relative;
+
+  .container, .row, .col-sm-6 {
+    height: 100%;
+  }
+
+  * {
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
+    color: $brand-primary
+  }
+
+  .social {
+    font-size: 1.5em;
+
+    a {
+      margin-right: 15px;
+    }
+
+    @media screen and (min-width: $screen-sm-min) {
+      position: absolute;
+      bottom: $jumbotron-padding / 2;
+      font-size: 3em;
+    }
+  }
+
+  @media screen and (min-width: $screen-sm-min) {
+    height: calc(100vh - #{$navbar-height});
+    overflow-y: visible;
+
+    .admin-bar & {
+      height: calc(100vh - #{($navbar-height + 32px)});
+    }
+  }
+}
+
+.home-section {
+  padding: {
+    top: $grid-gutter-width / 2;
+    bottom: $grid-gutter-width / 2;
+  }
+  &.home-section-alt {
+    background-color: $gray-light;
+  }
+}
+
+.portfolio-album {
+  @include make-xs-column(3);
+  @include make-sm-column(2);
+
+  margin: {
+    top: $grid-gutter-width / 2;
+    bottom: $grid-gutter-width / 2;
+  }
+}

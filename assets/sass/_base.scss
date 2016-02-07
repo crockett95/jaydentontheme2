@@ -1,0 +1,21 @@
+.site-footer {
+  background-color: darken($body-bg, 10);
+  padding: {
+    top: $grid-gutter-width / 2;
+    bottom: $grid-gutter-width / 2;
+  }
+
+  .copyright {
+    text-align: center;
+  }
+}
+
+.thin-top {
+  margin-top: 0;
+}
+
+.subtitle {
+  display: block;
+  font-size: 50%;
+  font-weight: normal;
+}

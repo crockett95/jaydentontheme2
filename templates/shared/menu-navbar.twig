@@ -1,0 +1,12 @@
+{% for item in menu %}
+  <li class="{{item.classes | join(' ')}}">
+    {% if (item.get_children|length > 0) %}
+      <a href="{{item.get_link}}" class="dropdown-toggle" data-toggle="dropdown">{{item.title}} <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        {% include "menu.twig" with {'menu': item.get_children} %}
+      </ul>
+    {% else %}
+      <a href="{{item.get_link}}">{{item.title}}</a>
+    {% endif %}
+  </li>
+{% endfor %}

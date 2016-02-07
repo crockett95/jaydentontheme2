@@ -1,0 +1,61 @@
+{% extends 'base.twig' %}
+
+{% block outerContent %}
+  {% block jumbotron %}
+    <div class="jumbotron home-banner" data-stellar-background-ratio="0.5">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h1>{{site.name}} <small class="subtitle jay">{{site.description}}</small></h1>
+            {% if socialMenu.get_items|length > 0 %}
+              <nav class="social">
+                <ul class="list-inline">
+                  {% for item in socialMenu.get_items %}
+                    <li class="{{item.classes|join(' ')}}">
+                      <a href="{{item.get_link}}" rel="_blank">
+                        <span class="fa {{item.menu_item_icon}}"></span>
+                        <span class="sr-only">{{item.title}}</span>
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </nav>
+            {% endif %}
+          </div>
+          <div class="col-sm-6">
+            {{post.get_field('jaydenton_jumbotron_right')}}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+
+  {% block section1 %}
+    <section class="home-section" id="section1">
+      <div class="container">
+        <h2>{{post.jaydenton_home_title1}}</h2>
+        {{post.get_field('jaydenton_home_section1')}}
+      </div>
+    </section>
+  {% endblock %}
+
+  {% block section2 %}
+    <section class="home-section home-section-alt" id="section2">
+      <div class="container">
+        <h2>{{post.jaydenton_home_title2}}</h2>
+        {{post.get_field('jaydenton_home_section2')}}
+      </div>
+    </section>
+  {% endblock %}
+
+  {% block section3 %}
+  <section class="home-section" id="widgets">
+    <div class="container">
+      <h2 class="sr-only">{{strings.moreNews}}</h2>
+      <div class="row">
+        {{widgets}}
+      </div>
+    </div>
+  </section>
+  {% endblock %}
+{% endblock %}

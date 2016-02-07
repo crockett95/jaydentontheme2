@@ -1,0 +1,43 @@
+body:not(.home) {
+  @media screen and (min-width: $screen-sm-min) {
+    background: {
+      image: url('../images/logo.png');
+      size: cover;
+      attachment: fixed;
+      position: center center;
+      repeat: no-repeat;
+    }
+  }
+}
+
+.page-content {
+  @media screen and (min-width: $screen-sm-min) {
+    margin: {
+      top: 40px;
+      bottom: 40px;
+    }
+
+    .page-header {
+      text-align: center;
+    }
+  }
+  @media screen and (min-width: $screen-md-min) {
+    margin: {
+      top: 60px;
+      bottom: 60px;
+    }
+  }
+
+  background-color: $body-bg;
+
+  @include clearfix();
+  @include make-md-column(10);
+  @include make-md-column-offset(1);
+  @include make-lg-column(8);
+  @include make-lg-column-offset(2);
+
+  padding: {
+    top: 15px;
+    bottom: 15px;
+  }
+}
