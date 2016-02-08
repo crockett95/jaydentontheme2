@@ -18,7 +18,9 @@ class Assets {
       wp_enqueue_style(Theme::NAME . '-style', get_stylesheet_uri());
     } else {
       wp_register_style('shadows-into-light', 'https://fonts.googleapis.com/css?family=Shadows+Into+Light');
+
       wp_register_style('lato', 'https://fonts.googleapis.com/css?family=Lato:300,400,700');
+
       wp_enqueue_style(Theme::NAME . '-style',
         $this->theme->uri . '/assets/css/main.css',
         array('shadows-into-light', 'lato'),
@@ -53,11 +55,21 @@ class Assets {
       '0.6.2',
       true);
 
+    wp_register_script('fastdom',
+      $this->theme->uri . '/bower_components/fastdom/fastdom.min.js',
+      array(),
+      '1.0.0',
+      true);
+
     wp_enqueue_script(Theme::NAME . '-scripts',
       $this->theme->uri . '/assets/js/main.js',
-      array('headroom', 'modernizr', 'bootstrap', 'jquery', 'stellar'),
+      array('headroom', 'modernizr', 'bootstrap', 'jquery', 'stellar', 'fastdom'),
       $this->theme->info('Version'),
       true);
+
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+      wp_enqueue_script('comment-reply');
+    }
   }
 
   protected function registerHooks()

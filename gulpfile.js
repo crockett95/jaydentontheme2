@@ -8,7 +8,7 @@ gulp.task('ts:dev', function () {
   
   return gulp.src(['./assets/ts/*{,/*}.ts', './typings/tsd.d.ts'])
     .pipe($.tslint())
-    .pipe($.tslint.report('verbose'))
+    .pipe($.tslint.report('verbose', { emitError: false }))
     .pipe($.sourcemaps.init())
     .pipe($.typescript(tsProj))
     .pipe($.sourcemaps.write())
@@ -19,6 +19,8 @@ gulp.task('ts:dist', function () {
   var tsProj = $.typescript.createProject('tsconfig.json');
   
   return gulp.src(['./assets/ts/**/*.ts', './typings/tsd.d.ts'])
+    .pipe($.tslint())
+    .pipe($.tslint.report('verbose', { emitError: false }))
     .pipe($.sourcemaps.init())
     .pipe($.typescript(tsProj))
     .pipe($.uglify())

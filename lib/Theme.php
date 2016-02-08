@@ -35,6 +35,8 @@ class Theme {
     $this->dotenv = new Dotenv($this->path);
     $this->themeInfo = wp_get_theme();
 
+    $this->options = new Options($this);
+
     $this->assets = new Assets($this);
     $this->menus = new Menus($this);
     $this->templates = new Templates($this);
@@ -104,5 +106,4 @@ class Theme {
   {
     add_action('after_setup_theme', array($this, 'setup'));
   }
-
 }

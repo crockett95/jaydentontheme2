@@ -5,9 +5,12 @@ namespace Crockett95\JayDenton;
 use Timber;
 use TimberTerm;
 use TimberUser;
+use TimberHelper;
 
 class Templates {
   protected $theme;
+
+  protected $content_width = 800;
 
   public function __construct($theme)
   {
@@ -28,7 +31,7 @@ class Templates {
 
   public function setContentWidth()
   {
-    $GLOBALS['content_width'] = apply_filters(Theme::NAME . '_width', 640);
+    $GLOBALS['content_width'] = apply_filters(Theme::NAME . '_width', $this->content_width);
   }
 
   public function searchForm($form)
@@ -49,10 +52,16 @@ class Templates {
     $data['strings'] = array(
       'copyright' => __('&copy; 2016 Jay Denton. All rights reserved.', Theme::NAME),
       'toggleNav' => __('Toggle navigation', Theme::NAME),
-      'moreNews'  => __('More News', Theme::NAME)
+      'moreNews'  => __('More News', Theme::NAME),
+      'message_404' => __('Sorry, we couldn\'t find what you\'re looking for.', Theme::NAME)
     );
 
     return $data;
+  }
+
+  protected function loadOptions(&$context)
+  {
+    $context['show_search_form'] = (bool) $this->theme->options->get_option('show_search', true);
   }
 
   protected function registerHooks()
@@ -68,14 +77,20 @@ class Templates {
     $templates[] = 'index.twig';
   }
 
-  protected function load404Template(&$templates)
+  protected function load404Template(&$templates, &$context)
   {
     $templates[] = '404.twig';
+
+    $context['title'] = __('Error 404', Theme::NAME);
   }
 
-  protected function loadSearchTemplate(&$templates)
+  protected function loadSearchTemplate(&$templates, &$context)
   {
     $templates[] = 'search.twig';
+
+    $searchQuery = get_search_query();
+    $context['search_query'] = $searchQuery;
+    $context['title'] = sprintf(__('Search Results for: %s', Theme::NAME), $searchQuery);
   }
 
   protected function loadFrontPageTemplate(&$templates)
@@ -83,12 +98,13 @@ class Templates {
     $templates[] = 'front-page.twig';
   }
 
-  protected function loadHomeTemplate(&$templates)
+  protected function loadHomeTemplate(&$templates, &$context)
   {
     $templates[] = 'home.twig';
+    $context['title'] = $this->theme->options->get_option('home_title', 'Posts');
   }
 
-  protected function loadPostTypeArchiveTemplate(&$templates)
+  protected function loadPostTypeArchiveTemplate(&$templates, &$context)
   {
     $post_type = get_query_var('post_type');
 
@@ -100,10 +116,12 @@ class Templates {
 
     if (!$obj->has_archive) return;
 
-    $this->loadArchiveTemplate($templates);
+    $context['post_type'] = $obj;
+
+    $this->loadArchiveTemplate($templates, $context);
   }
 
-  protected function loadArchiveTemplate(&$templates)
+  protected function loadArchiveTemplate(&$templates, &$context)
   {
     $post_types = array_filter((array)get_query_var('post_type'));
 
@@ -113,6 +131,9 @@ class Templates {
     }
 
     $templates[] = 'archive.twig';
+
+    $context['title'] = get_the_archive_title();
+    $context['description'] = get_the_archive_description();
   }
 
   protected function loadTaxonomyTemplate(&$templates, &$context)
@@ -151,7 +172,7 @@ class Templates {
     $templates[] = 'attachment.twig';
   }
 
-  protected function loadSingleTemplate(&$templates)
+  protected function loadSingleTemplate(&$templates, &$context)
   {
     $object = get_queried_object();
 
@@ -160,6 +181,8 @@ class Templates {
       $templates[] = "single-{$object->post_type}.twig";
     }
     $templates[] = 'single.twig';
+
+    $context['comment_form'] = TimberHelper::get_comment_form(null, $this->getCommentFormArgs());
   }
 
   protected function loadPageTemplate(&$templates)
@@ -281,7 +304,44 @@ class Templates {
 
     $context = array_merge(Timber::get_context(), $context);
     $context['posts'] = Timber::get_posts();
+    $context['debug'] = defined('WP_DEBUG') && WP_DEBUG;
+
+    $this->loadOptions($context);
 
     Timber::render($templates, $context);
+  }
+
+  protected function getCommentFormArgs()
+  { 
+    $req      = get_option( 'require_name_email' );
+    $aria_req = ( $req ? " aria-required='true'" : '' );
+    $html_req = ( $req ? " required='required'" : '' );
+    $commenter = wp_get_current_commenter();
+
+    return array(
+      'title_reply_before' => '<h4>',
+      'title_reply_after' => '</h4>',
+      'fields' => array(
+        'author' => '<div class="comment-form-author form-group">' .
+          '<label for="author">' . __('Name') . ($req ? ' <span class="required">*</span>' : '') . '</label> ' .
+          '<input id="author" class="form-control" name="author" type="text" value="' . esc_attr($commenter['comment_author']) . '" size="30" maxlength="245"' . $aria_req . $html_req . ' />' .
+          '</p>',
+        'email'  => '<div class="comment-form-email form-group">' .
+          '<label for="email">' . __('Email') . ($req ? ' <span class="required">*</span>' : '') . '</label> ' .
+          '<input id="email" class="form-control" name="email" type="email" value="' . esc_attr( $commenter['comment_author_email']) . '" size="30" maxlength="100" aria-describedby="email-notes"' . $aria_req . $html_req  . ' />' .
+          '</div>',
+        'url'    => '<div class="comment-form-url form-group">' .
+          '<label for="url">' . __('Website') . '</label> ' .
+          '<input id="url" class="form-control" name="url" type="url" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="30" maxlength="200" />' .
+          '</div>',
+        ),
+      'comment_field' => '<div class="comment-form-comment form-group"><label for="comment">' .
+        _x('Comment', 'noun') .
+        '</label><textarea class="form-control" id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></div>',
+      'must_log_in' => '<p class="must-log-in text-danger">' .
+        sprintf(__('You must be <a href="%s">logged in</a> to post a comment.'), wp_login_url(apply_filters('the_permalink', get_permalink()))) .
+        '</p>',
+      'class_submit' => 'btn btn-block btn-primary',
+    );
   }
 }

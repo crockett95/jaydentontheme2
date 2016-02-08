@@ -22,6 +22,7 @@
     "headroom.js": "~0.7.0",
     "bootswatch": "~3.3.6+1",
     "modernizr-built": "~3.2.0",
-    "jquery.stellar": "stellar#~0.6.2"
+    "jquery.stellar": "stellar#~0.6.2",
+    "fastdom": "~1.0.0"
   }
 }

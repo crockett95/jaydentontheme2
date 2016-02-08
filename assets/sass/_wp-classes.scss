@@ -40,3 +40,16 @@
   @extend .sr-only;
   @extend .sr-only-focusable;
 }
+.tagcloud a {
+  display: inline-block;
+  margin-right: 5px;
+}
+.widget_calendar table {
+  width: 100%
+}
+.widget_meta ul {
+  @extend .list-unstyled;
+}
+.comment-reply-link {
+  @extend .label, .label-default;
+}

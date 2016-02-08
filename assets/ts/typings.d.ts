@@ -35,3 +35,19 @@ interface StellarOptions {
 interface JQuery {
   stellar(options?: StellarOptions): JQuery;
 }
+
+interface FastDOMTask<T> {
+  fn: () => void;
+  ctx?: T;
+}
+
+interface FastDOM {
+  measure<T>(fn: () => void, ctx?: T): FastDOMTask<T>;
+  mutate<T>(fn: () => void, ctx?: T): FastDOMTask<T>;
+  clear(task: FastDOMTask<any>): boolean;
+}
+
+declare var fastdom: FastDOM;
+declare module 'fastdom' {
+  export = fastdom;
+}

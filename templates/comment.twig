@@ -1,0 +1,18 @@
+<li class="blog-comment media {{comment.comment_type}}" id="comment-{{comment.ID}}">
+  <div class="media-left"><img src="{{comment.avatar}}" alt="{{comment.author.name}}" class="media-object"></div>
+  <div class="media-body">
+    <h4 class="comment-author media-heading">{{comment.author.name}}</h5>
+    <small>{{comment.comment_date|time_ago}}</small>
+    <div class="comment-content clearfix">
+      {{comment.comment_content|wpautop}}
+      <div>{{comment.reply_link()}}</div>
+    </div>
+    {% if comment.children|length > 0 %}
+      <ul class="media-list" style="margin-top:15px">
+        {% for cmt in comment.children %}
+          {% include "comment.twig" with {comment:cmt} %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</li>

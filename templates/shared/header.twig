@@ -16,7 +16,7 @@
       <ul class="nav navbar-nav">
         {% include "menu-navbar.twig" with {'menu': menu.get_items} %}
       </ul>
-      {{ function('get_search_form') }}
+      {% if show_search_form %}{{ function('get_search_form') }}{% endif %}
     </nav><!-- /.navbar-collapse -->
   </div>
 </header>

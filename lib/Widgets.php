@@ -35,9 +35,19 @@ class Widgets {
     return $data;
   }
 
+  public function addTagCloudClass($data)
+  {
+    return array_map(function ($datum) {
+      $datum['class'] .= ' label label-primary';
+
+      return $datum;
+    }, $data);
+  }
+
   protected function registerHooks()
   {
     add_action('widgets_init', array($this, 'registerWidgetAreas'));
     add_filter('timber/context', array($this, 'getWidgetsForHomepage'));
+    add_filter('wp_generate_tag_cloud_data', array($this, 'addTagCloudClass'));
   }
 }
