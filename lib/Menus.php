@@ -52,6 +52,8 @@ class Menus {
 
   public function addChildClasses($items)
   {
+    if (!is_array($items) || !count($items)) return;
+
     foreach ($items as $item) {
       if (is_array($item->children) && count($item->children)) {
         $item->add_class('dropdown');

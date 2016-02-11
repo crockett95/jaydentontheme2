@@ -18,8 +18,10 @@ class Templates {
 
     $this->timber = new Timber();
     Timber::$dirname = array('templates', 'templates/shared');
+    Timber::$cache = true;
 
     $this->registerHooks();
+    $this->loadCustomFields();
   }
 
   public function templateInclude($template)
@@ -62,6 +64,12 @@ class Templates {
   protected function loadOptions(&$context)
   {
     $context['show_search_form'] = (bool) $this->theme->options->get_option('show_search', true);
+  }
+
+  protected function loadCustomFields()
+  {
+    define('ACF_LITE', true);
+    new CustomFields\FrontPage();
   }
 
   protected function registerHooks()
@@ -312,7 +320,7 @@ class Templates {
   }
 
   protected function getCommentFormArgs()
-  { 
+  {
     $req      = get_option( 'require_name_email' );
     $aria_req = ( $req ? " aria-required='true'" : '' );
     $html_req = ( $req ? " required='required'" : '' );

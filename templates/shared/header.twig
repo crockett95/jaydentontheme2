@@ -13,9 +13,11 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <nav class="collapse navbar-collapse navbar-ex1-collapse navbar-right" role="navigation">
+      {% if menu.get_items|length > 0 %}
       <ul class="nav navbar-nav">
         {% include "menu-navbar.twig" with {'menu': menu.get_items} %}
       </ul>
+      {% endif %}
       {% if show_search_form %}{{ function('get_search_form') }}{% endif %}
     </nav><!-- /.navbar-collapse -->
   </div>

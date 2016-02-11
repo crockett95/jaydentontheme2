@@ -1,9 +1,11 @@
 <footer id="footer" class="site-footer">
   <div class="container">
     <nav>
+      {% if menu.get_items|length > 0 %}
       <ul class="list-inline">
         {% include 'menu.twig' with { 'menu': menu } %}
       </ul>
+      {% endif %}
     </nav>
     <p class="copyright">{{strings.copyright}}</p>
   </div>

@@ -4,10 +4,11 @@
 
 .home-banner {
   background: {
-    image: url('../images/logo.png');
+    color: darken($body-bg, 10);
+    image: url('../images/logo.svg');
     size: cover;
     attachment: fixed;
-    position: center;
+    position: 30% center;
     repeat: no-repeat;
   }
   margin: {
