@@ -9,7 +9,7 @@ use Twig_Environment;
 class Options {
   /**
    * Namespace for options
-   * 
+   *
    * @var     string
    */
   public $namespace;
@@ -95,6 +95,12 @@ class Options {
 
     $this->add_settings_field('show_search',
       __('Show Search Form?', Theme::NAME),
+      'options',
+      'general',
+      'checkbox');
+
+    $this->add_settings_field('show_widgets',
+      __('Show Widget Area on Front Page?', Theme::NAME),
       'options',
       'general',
       'checkbox');
@@ -314,7 +320,7 @@ class Options {
       case 'checkbox':
         if ($value) $additionalAttributes[] = 'checked="checked"';
         $value = '1';
-      case 'text':           
+      case 'text':
       default:
       return printf(
         '<input id="%1$s" name="%1$s" class="%2$s" value="%3$s" type="%4$s" %5$s />',

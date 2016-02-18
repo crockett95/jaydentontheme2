@@ -64,6 +64,7 @@ class Templates {
   protected function loadOptions(&$context)
   {
     $context['show_search_form'] = (bool) $this->theme->options->get_option('show_search', true);
+    $context['show_widget_area'] = (bool) $this->theme->options->get_option('show_widgets', true);
   }
 
   protected function loadCustomFields()

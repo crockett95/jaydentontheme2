@@ -49,13 +49,15 @@
   {% endblock %}
 
   {% block section3 %}
-  <section class="home-section" id="widgets">
-    <div class="container">
-      <h2 class="sr-only">{{strings.moreNews}}</h2>
-      <div class="row">
-        {{widgets}}
+    {% if show_widget_area %}
+    <section class="home-section" id="widgets">
+      <div class="container">
+        <h2 class="sr-only">{{strings.moreNews}}</h2>
+        <div class="row">
+          {{widgets}}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+    {% endif %}
   {% endblock %}
 {% endblock %}
